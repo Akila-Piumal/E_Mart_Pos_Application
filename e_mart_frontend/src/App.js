@@ -1,10 +1,12 @@
 import React from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Login from "./components/Login";
 
 const App = () => {
     return(
-        <div>
-            <h1 className="text-3xl font-bold underline">Hello React</h1>
-        </div>
+        <Routes>
+            <Route path="/" element={<Login/>}/>
+        </Routes>
     );
 }
 
