@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { Children } from 'react'
 
-const Model = ({isVisible, onClose}) => {
+const Model = ({isVisible, onClose, children}) => {
   if(!isVisible) return null;
 
+  // Close the Model when Click the outside of model
+  const handleClose = (e) =>{
+    if(e.target.id === 'wrapper') onClose();
+  }
+
   return (
-    <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center '>
-     <div className='w-[600px] flex flex-col'>
+    <div 
+      className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center'
+      id='wrapper'
+      onClick={handleClose}
+    >
+     <div className='md:w-[600px] w-[90%] mx-auto flex flex-col'>
         <button
-           className='text-white text-xl place-self-end'
+           className='text-dark text-xl place-self-end'
            onClick={()=>onClose()}
         >x</button>
         <div className='bg-white p-2 rounded'>
-          Model
+          {children}
         </div>
      </div>
     </div>

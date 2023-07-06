@@ -48,6 +48,41 @@ module.exports = {
         mainColor: '#FBF8F9',
         secondaryColor: '#F0F0F0',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
+        
+        BlueSet1:'#171E45',
+        OrangeSet1:'#E85E04',
+        lightBlueSet1:'#91CDE2',
+        YellowSet1:'#F6C35D',
+
+        GreenSet2:'#B9FD4C',
+        BlueSet2:'#75BCFF',
+        Green2Set2:'#03CD69',
+        BlackSet2:'#161616',
+        
+        BlueSet3:'#2423EC',
+        RedSet3:'#E43D3D',
+        OrangeSet3:'#FB9A5C',
+
+        BlueSet4:'#1555B6',
+        Blue2Set4:'#56B9EE',
+        GreenSet4:'#15B96A',
+        BlackSet4:'#212226',
+
+        PurpleSet5:'#332E4C',
+        RedSet5:'#FF4E4A',
+        YellowSet5:'#FF991F',
+        BlueSet5:'#4CC9FF',
+
+        BlueSet6:'#1C528A',
+        YellowSet6:'#F7C91B',
+        RedSet6:'FE5145',
+        Blue2Set6:'#01C8F1',
+
+        BlueSet7:'#2517C2',
+        YellowSet7:'F7FF82',
+        BlackSet7:'010005',
+        GraySet7:'515D6F',
+
       },
       keyframes: {
         'slide-in': {

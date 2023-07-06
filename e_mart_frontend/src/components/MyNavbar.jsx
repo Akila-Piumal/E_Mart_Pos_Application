@@ -4,9 +4,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import logo from '../assets/image2.png';
 import cart from '../assets/cart.png';
+import {FcGoogle} from 'react-icons/fc';
 
 import { useNavigate } from 'react-router-dom';
-
 import Model from './Model';
 
 const navigation = [
@@ -22,6 +22,8 @@ function classNames(...classes) {
 
 const MyNavbar = (props) => {
   const [showModel, setShowModel] = useState(false)
+
+  const [loginSignupChange, setLoginSignupChange] = useState(true)
 
   return (
     <>
@@ -67,7 +69,8 @@ const MyNavbar = (props) => {
                           )}
                           aria-current={item.current ? 'page' : undefined}
                           onClick={()=>{
-                            item.name==="Login" ? setShowModel(true):console.log("Login newe");
+                            setLoginSignupChange(true);
+                            item.name==="Login" ?setShowModel(true) :console.log("Login newe");
                           }}
                         >
                           {item.name}
@@ -82,6 +85,7 @@ const MyNavbar = (props) => {
                       <button 
                         className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         onClick={()=>{
+                          setLoginSignupChange(true)
                           props.user ? (
                             alert("Cart Ekata yanna ona")
                           ):(
@@ -123,7 +127,215 @@ const MyNavbar = (props) => {
       </Disclosure>
 
       {/* Model */}
-      <Model isVisible={showModel} onClose={()=>setShowModel(false)}/>
+      <Model className='w-[600px]' isVisible={showModel} onClose={()=>setShowModel(false)}>
+        {
+          loginSignupChange ? (
+
+            //Login Model
+            <div className='py-6 px-6 lg:px-8 text-left'>
+              <h3 className='mb-4 text-2xl font-medium text-gray-900 text-center font-black'>
+                 Login
+              </h3>
+              <form className='space-y-6' action="#">
+                 <div>
+                   <label
+                     for="email"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Your email    
+                   </label>
+                   <input 
+                     type="text"
+                     name="email"
+                     id="email"
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5'
+                     placeholder='Ex : name@example.com'
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label
+                     for="password"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Your password
+                   </label>
+                   <input 
+                     type="password"
+                     name='password'
+                     id='password'
+                     placeholder='*********'
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                   />
+                 </div>
+                 <div className='flex justify-between'>
+                   <div className='flex items-start'>
+                     <div className='flex items-center h-5'>
+                         <input 
+                           id='remember'
+                           type="checkbox"
+                           value=""
+                           className='w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'
+                           required 
+                         />
+                     </div>
+                     <label
+                       for="remember"
+                       className='ml-2 text-sm font-medium text-gray-900'
+                     >
+                       Remember me
+                     </label>  
+                   </div>
+                   <a href="#" className='text-sm text-blue-700 hover:underline'>
+                     Forget Password
+                   </a>
+                 </div>
+                 <div className='flex justify- flex-col items-center '>
+                   <button
+                     type='submit'
+                     className='w-56 lg:w-72 text-white bg-BlueSet1 hover:bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                   >
+                     Login
+                   </button>
+                   
+                   <h3 className='mt-3 font-bold'>or</h3>
+   
+                   <button
+                     type='button'
+                     className='mt-3 w-56 lg:w-72 text-white bg-Green2Set2 hover:bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                     onClick={()=>{
+                      setLoginSignupChange(false)
+                     }}
+                   >
+                     Registration
+                   </button>
+                 </div>
+   
+                 <div className='flex flex-col justify-center items-center'>      
+                   <div className='shadow-xl' rounded>
+                           <button 
+                             type='button'
+                             className='bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none'
+                           >
+                             <FcGoogle className='mr-4'/> Sign in with Google
+                           </button>
+                   </div>
+               </div>
+              </form>
+           </div>
+
+          ):(    
+
+            // Sign Up Model
+            <div className='py-6 px-6 lg:px-8 text-left'>
+              <h3 className='mb-4 text-2xl font-medium text-gray-900 text-center font-black'>
+                 Register
+              </h3>
+              <form className='space-y-2' action="#">
+                 <div>
+                   <label
+                     for="userName"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     User Name    
+                   </label>
+                   <input 
+                     type="text"
+                     name="userName"
+                     id="userName"
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5'
+                     placeholder=''
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label
+                     for="address"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Address
+                   </label>
+                   <input 
+                     type="text"
+                     name='address'
+                     id='address'
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                   />
+                 </div>
+                 <div>
+                   <label
+                     for="emailInSignUp"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Your email    
+                   </label>
+                   <input 
+                     type="email"
+                     name="emailInSignUp"
+                     id="emailInSignUp"
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5'
+                     placeholder='Ex : name@example.com'
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label
+                     for="contactNo"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Contact No    
+                   </label>
+                   <input 
+                     type="number"
+                     name="contactNo"
+                     id="contactNo"
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5'
+                     required
+                   />
+                 </div>
+                 <div>
+                   <label
+                     for="passwordInSignup"
+                     className='block mb-2 text-sm font-medium text-gray-900'
+                   >
+                     Your password
+                   </label>
+                   <input 
+                     type="password"
+                     name='passwordInSignup'
+                     id='passwordInSignup'
+                     placeholder='*********'
+                     className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                   />
+                 </div>
+
+                 <div className='flex justify- flex-col items-center '>
+                   <button
+                     type='submit'
+                     className='w-56 lg:w-72 text-white bg-BlueSet1 hover:bg-blue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
+                   >
+                     Register
+                   </button>
+                   
+                   <h3 className='mt-3 font-bold'>or</h3>
+                 </div>
+   
+                 <div className='flex flex-col justify-center items-center'>      
+                   <div className='shadow-xl' rounded>
+                           <button 
+                             type='button'
+                             className='bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none'
+                           >
+                             <FcGoogle className='mr-4'/> Sign in with Google
+                           </button>
+                   </div>
+                 </div>
+              </form>
+            </div>
+
+          )
+        }
+      </Model>
 
     </>
   )
