@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/src/components/Login.jsx
+/src/components/MyPage.jsx
+
 
 # testing
 /coverage
