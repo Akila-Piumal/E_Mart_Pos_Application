@@ -5,7 +5,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from '../assets/image2.png';
 import cart from '../assets/cart.png';
 import {FcGoogle} from 'react-icons/fc';
-
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Model from './Model';
 
@@ -24,6 +25,32 @@ const MyNavbar = (props) => {
   const [showModel, setShowModel] = useState(false)
 
   const [loginSignupChange, setLoginSignupChange] = useState(true)
+
+  const login = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      try{
+        const resp= await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",{
+          headers:{
+            "Authorization":`Bearer ${tokenResponse.access_token}`
+          }
+        })
+
+        console.log(resp.data)
+        localStorage.setItem('user',JSON.stringify(resp.data));
+
+        const {name, sub, picture} = resp.data;
+
+        // Save to the database
+
+        
+
+        // -------------------------------
+
+      }catch(err){
+        console.log(err);
+      }
+    }
+  })
 
   return (
     <>
@@ -216,6 +243,7 @@ const MyNavbar = (props) => {
                            <button 
                              type='button'
                              className='bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none'
+                             onClick={login}
                            >
                              <FcGoogle className='mr-4'/> Sign in with Google
                            </button>
