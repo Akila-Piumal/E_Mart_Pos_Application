@@ -7,7 +7,8 @@ const loginSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     user:{
         type:mongoose.SchemaTypes.ObjectId,

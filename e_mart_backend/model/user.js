@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema({
     address:{
         type:String,
         required:true,
-
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     contactNo:{
         type:Number,
