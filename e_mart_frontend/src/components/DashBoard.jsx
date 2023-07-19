@@ -2,6 +2,7 @@ import React from "react";
 import MyNavbar from "./MyNavbar";
 import Slider from "./Slider";
 import Category from "./Category";
+import SuperDeals from "./SuperDeals";
 
 const searchItem = (e) => {
   e.preventDefault();
@@ -52,7 +53,7 @@ const DashBoard = () => {
       </div>
 
       {/* Categories and slideer*/}
-      <div id="" className="bg-white mt-5 h-screen flex gap-4">
+      <div id="" className="bg-white mt-5 flex gap-4">
 
         <Category/>
 
@@ -60,8 +61,9 @@ const DashBoard = () => {
 
       </div>
 
-      
+      <SuperDeals/>
 
+      
     </>
   );
 };
