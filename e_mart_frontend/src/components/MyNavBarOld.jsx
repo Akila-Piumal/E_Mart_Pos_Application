@@ -1,17 +1,20 @@
 import { Fragment, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import logo from "../assets/image2.png";
 import cart from "../assets/cart.png";
+import { FcGoogle } from "react-icons/fc";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Model from "./Model";
 
 const navigation = [
-  { name: "Home", href: "#", current: true , hide:false},
-  { name: "Contact", href: "#", current: false, hide:false},
-  { name: "About", href: "#", current: false, hide:false },
-  { name: "Login", href: "#", current: false , hide:true},
+  { name: "Home", href: "#", current: true },
+  { name: "Contact", href: "#", current: false },
+  { name: "About", href: "#", current: false },
+  { name: "Login", href: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -21,6 +24,71 @@ function classNames(...classes) {
 
 const MyNavbar = (props) => {
   const navigate = useNavigate();
+
+  const [showModel, setShowModel] = useState(false);
+  const [loginSignupChange, setLoginSignupChange] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [address, setAddress] = useState("");
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [role, setRole] = useState("customer");
+  const [signupPassword, setSignupPassword] = useState("");
+
+  // Login with Google
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const resp = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+
+        console.log(resp.data);
+        localStorage.setItem("user", JSON.stringify(resp.data));
+
+        const { name, sub, picture } = resp.data;
+
+        // Save to the database
+
+        // -------------------------------
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+
+  // Save register details to the backend
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const user = {
+      userName: userName,
+      address: address,
+      email: signUpEmail,
+      contactNo: contactNo,
+      role: role,
+    };
+
+    try {
+      await axios
+        .post("http://localhost:5000/api/v1/login", {
+          user,
+          signupPassword,
+        })
+        .then((res) => {
+          if (res.data.message == "saved") {
+            localStorage.setItem('user',JSON.stringify(user))
+            navigate("/dashboard");
+          }
+        });
+    } catch (err) {
+      alert("Failed");
+      console.log(err.message);
+    }
+  };
 
   return (
     <>
@@ -56,17 +124,11 @@ const MyNavbar = (props) => {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {/* {
-                        props.user ? alert("innawaa"):alert("na")
-                      } */}
                       {navigation.map((item) => (
                         <a
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            // hide the login from navbar when user logged in
-                            props.user ? (!item.hide ? "visible":"invisible"):(!item.hide ? "visible":"visible"),
-                
                             item.current
                               ? "bg-gray-900 text-white"
                               : "text-gray-300 hover:bg-gray-700 hover:text-white",
@@ -74,9 +136,10 @@ const MyNavbar = (props) => {
                           )}
                           aria-current={item.current ? "page" : undefined}
                           onClick={() => {
+                            setLoginSignupChange(true);
                             item.name === "Login"
-                              ?  navigate('/login')
-                              : alert("Login newe");
+                              ? setShowModel(true)
+                              : console.log("Login newe");
                           }}
                         >
                           {item.name}
@@ -90,13 +153,13 @@ const MyNavbar = (props) => {
                     <button
                       className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                       onClick={() => {
+                        setLoginSignupChange(true);
                         props.user
-                          ? navigate('/cart')
-                          : navigate('/login')
+                          ? alert("Cart Ekata yanna ona")
+                          : setShowModel(true);
                       }}
                     >
                       <img className="h-8 w-8 rounded-full" src={cart} alt="" />
-                      <span id="cartCount">0</span>
                     </button>
                   </div>
                 </div>
@@ -128,7 +191,6 @@ const MyNavbar = (props) => {
       </Disclosure>
 
       {/* Model */}
-
       {/* <Model
         className="w-[600px]"
         isVisible={showModel}

@@ -3,10 +3,30 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['ui-sans-serif', 'system-ui'],
+        'serif': ['ui-serif', 'Georgia'],
+        'mono': ['ui-monospace', 'SFMono-Regular'],
+        'display': ['Oswald'],
+        'body': ['"Open Sans"'],
+        'h1family':['Impact','Haettenschweiler','"Arial Narrow Bold"','sans-serif']
+      },
+      lineHeight: {
+        '70': '70px',
+      },
       margin: {
+        34:'34px',
+        50:'50px',
+        100:'100px',
         320: '320px',
+        400:'400px',
+        490:'490px',
+        670:'670px'
       },
       width: {
+        70:'70px',
+        80:'80px',
+        90:'90px',
         190: '190px',
         275: '275px',
         300: '300px',
@@ -18,9 +38,11 @@ module.exports = {
       },
       height: {
         80: '80px',
+        250:'250px',
         340: '340px',
         370: '370px',
         420: '420px',
+        475:'475px',
         510: '510px',
         600: '600px',
         685: '685px',
@@ -43,8 +65,25 @@ module.exports = {
         primary: '#FAFAFA',
         secColor: '#efefef',
         navColor: '#BEBEBE',
+        myColor:'#1F2937',
+        fontColor:'#3b3b3b',
+        blue1:'#3022FF',
+        blue2:'#7AA2FF',
+        green1:'#44FF5A',
+        red1:'#FF4545',
+        darkGray:'#95a5a6',
+        Orange1:'#E85E04',
       },
       backgroundColor: {
+        graynew:'#EEEDED',
+        grayNew2:'#E8E2E2',
+        grayNew3:'#DCDCDC',
+        homeBaground:'#F2F2F2',
+        homeBaground2:'#fff',
+
+        social:'#E6EEFF',
+        searchBar:'#f5f5f5',
+
         mainColor: '#FBF8F9',
         secondaryColor: '#F0F0F0',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',

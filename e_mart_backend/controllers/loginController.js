@@ -54,11 +54,18 @@ const saveLogin = (req, res) => {
     });
 };
 
-const getLoginDetails = (req, res) => {
-  Login.findOne({ email: req.body.email, password: req.body.password })
+// Login with Email and password
+const login = (req, res) => {
+  Login.findOne({ email: req.body.signUpEmail, password: req.body.signupPassword })
+    .populate('user')
     .then((response) => {
-      if (response != null) {
-      }
+
+        if (response != null) {
+            res.status(201).json({message:"Logged",user:response.user})
+        }else{
+            res.status(409).json({message:"Email Or password incorrect.!!"})
+        }
+
     })
     .catch((err) => {
       console.log(err.message);
@@ -66,7 +73,7 @@ const getLoginDetails = (req, res) => {
     });
 };
 
-module.exports = { saveLogin, getLoginDetails };
+module.exports = { saveLogin, login };
 
 // app.post("/post", async(req,res)=>{
 //     const {password} = req.body;
