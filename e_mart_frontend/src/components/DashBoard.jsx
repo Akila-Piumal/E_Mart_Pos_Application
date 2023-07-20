@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import MyNavbar from "./MyNavbar";
 import Slider from "./Slider";
 import Category from "./Category";
 import SuperDeals from "./SuperDeals";
+import axios from "axios";
+import ImageUpoad from "./ImageUpoad";
 
 const searchItem = (e) => {
   e.preventDefault();
   alert("Searching");
 };
 
-
 const DashBoard = () => {
   const user = JSON.stringify(localStorage.getItem("user"));
 
+ 
   return (
     <>
       <MyNavbar user={user} />
@@ -54,16 +56,15 @@ const DashBoard = () => {
 
       {/* Categories and slideer*/}
       <div id="" className="bg-white mt-5 flex gap-4">
+        <Category />
 
-        <Category/>
-
-        <Slider/>
-
+        <Slider />
       </div>
 
-      <SuperDeals/>
+      <SuperDeals />
 
-      
+
+
     </>
   );
 };
