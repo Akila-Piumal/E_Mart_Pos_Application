@@ -40,7 +40,7 @@ const fadeImages = [
 const Slider = () => {
   return (
     <>
-      <div className="bg-grayNew3 w-4/5 mr-5 mt-5 gap-5 rounded-2xl h-475 flex flex-col justify-center ">
+      <div className="bg-grayNew3 w-4/5 mr-5 mt-5 gap-5 rounded-2xl h-475 flex flex-col justify-center shadow-xl">
         <Fade>
           {fadeImages.map((fadeImage, index) => (
             <div

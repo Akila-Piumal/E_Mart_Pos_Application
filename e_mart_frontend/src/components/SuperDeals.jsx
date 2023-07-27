@@ -88,7 +88,7 @@ const SuperDeals = () => {
           <p className="text-gray-400 ml-6">Top products, Incredible prices.</p>
         </div>
 
-        <div id="products">
+        <div id="products" className="bg-homeBaground m-4 rounded-xl shadow-lg">
           <Slider {...settings}>
             {data.productItems.map((productItems) => {
               return (

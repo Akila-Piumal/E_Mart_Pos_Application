@@ -5,7 +5,7 @@ const Category = () => {
     <>
         <div
           id="sideDiv"
-          className=" w-1/5 h-475 ml-5 mt-5 rounded-2xl bg-homeBaground"
+          className=" w-1/5 h-475 ml-5 mt-5 rounded-2xl bg-homeBaground shadow-lg"
         >
           <div className="flex flex-col ml-3 mt-3 ">
             <div className="flex gap-1">

@@ -11,7 +11,8 @@ app.use(cors());
 require('dotenv').config();
 
 const loginRoute = require('./routes/LoginRoute')
-const uploadRoute = require('./routes/uploadRoute')
+const imageRoute = require('./routes/imageRoute')
+const productRoute = require('./routes/ProductRoute')
 
 mongoose.connect(
     "mongodb://127.0.0.1:27017/e_mart"
@@ -24,4 +25,5 @@ mongoose.connect(
 })
 
 app.use('/api/v1',loginRoute)
-app.use('/api/v1',uploadRoute)
+app.use('/api/v1',imageRoute)
+app.use('/api/v1',productRoute)

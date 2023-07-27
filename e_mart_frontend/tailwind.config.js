@@ -28,17 +28,21 @@ module.exports = {
         70:'70px',
         80:'80px',
         90:'90px',
+        150:'150px',
         190: '190px',
+        250:'250px',
         275: '275px',
         300: '300px',
         340: '340px',
         350: '350px',
+        500:'500px',
         656: '656px',
         880: '880px',
         508: '508px',
       },
       height: {
         80: '80px',
+        150:'150px',
         250:'250px',
         300:'300px',
         340: '340px',
@@ -75,6 +79,7 @@ module.exports = {
         red1:'#FF4545',
         darkGray:'#95a5a6',
         Orange1:'#E85E04',
+        black:'#202020'
       },
       backgroundColor: {
         graynew:'#EEEDED',
@@ -123,6 +128,8 @@ module.exports = {
         YellowSet7:'F7FF82',
         BlackSet7:'010005',
         GraySet7:'515D6F',
+
+        laBlue:'#C0F1FF'
 
       },
       keyframes: {

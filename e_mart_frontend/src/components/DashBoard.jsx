@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyNavbar from "./MyNavbar";
 import Slider from "./Slider";
 import Category from "./Category";
 import SuperDeals from "./SuperDeals";
 import axios from "axios";
 import ImageUpoad from "./ImageUpoad";
+import AllProducts from "./AllProducts";
+import { useStateContext } from "../context/StateContext";
+import { toast } from 'react-hot-toast';
 
 const searchItem = (e) => {
   e.preventDefault();
@@ -14,10 +17,16 @@ const searchItem = (e) => {
 const DashBoard = () => {
   const user = JSON.stringify(localStorage.getItem("user"));
 
- 
+  const { onAdd,cartItems } = useStateContext();
+
+  const setCartItemstoArray = (product) => {
+    onAdd(product);
+   
+  }
+
   return (
     <>
-      <MyNavbar user={user} />
+      <MyNavbar user={user} cartItems={cartItems}/>
 
       {/* Search Bar */}
       <div className="flex justify-center ">
@@ -63,8 +72,9 @@ const DashBoard = () => {
 
       <SuperDeals />
 
+      <AllProducts  setCartItemstoArray={setCartItemstoArray} />
 
-
+      {/* <ImageUpoad/> */}
     </>
   );
 };

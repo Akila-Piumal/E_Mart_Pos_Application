@@ -22,6 +22,8 @@ function classNames(...classes) {
 const MyNavbar = (props) => {
   const navigate = useNavigate();
 
+  localStorage.setItem("cartItems",JSON.stringify(props.cartItems))
+
   return (
     <>
       {/* Nav Bar */}
@@ -96,7 +98,7 @@ const MyNavbar = (props) => {
                       }}
                     >
                       <img className="h-8 w-8 rounded-full" src={cart} alt="" />
-                      <span id="cartCount">0</span>
+                      <span id="cartCount">{props.cartItems ? props.cartItems.length:0}</span>
                     </button>
                   </div>
                 </div>
