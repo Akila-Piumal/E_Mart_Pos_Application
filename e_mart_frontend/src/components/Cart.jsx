@@ -19,7 +19,9 @@ const Cart = () => {
 
   const navigate = useNavigate();
 
-  function updateTotal(selectedQuantity, itemPrice, discount, id) {
+  const [purchaseDetails, setPurchaseDetails] = useState([]);
+
+  function updateTotal(selectedQuantity, itemPrice, discount, id, item) {
     const quantity = parseInt(selectedQuantity, 10);
 
     const total = quantity * itemPrice;
@@ -52,7 +54,6 @@ const Cart = () => {
       (document.getElementById("fullTotal").textContent = `${total}`);
   }, []);
 
-
   // Remove from cart
   const removeItem = (item) => {
     const oldTotal = parseFloat(
@@ -66,8 +67,35 @@ const Cart = () => {
     onRemove(item);
 
     document.getElementById("fullTotal").textContent = `${
-      fullTotalOld-oldTotal
+      fullTotalOld - oldTotal
     } `;
+  };
+
+  const setOrderDetails = () => {
+    const orderDetailsArray = [];
+
+    cartItems.map((item) => {
+      var quantity = parseInt(
+        document.getElementById("quantity" + item._id).value
+      );
+
+      var total = parseInt(
+        document.getElementById("total" + item._id).textContent
+      );
+
+      const orderDetail = {
+        item: item,
+        quantity: quantity,
+        total:total
+      };
+
+      orderDetailsArray.push(orderDetail)
+
+    });
+
+    localStorage.setItem("orderDetails",JSON.stringify(orderDetailsArray))
+
+    navigate('/checkout')
   };
 
   return (
@@ -124,7 +152,7 @@ const Cart = () => {
                     </label>
                     <div className="mt-2">
                       <select
-                        id="quantity"
+                        id={`quantity` + item._id}
                         name="quantity"
                         autoComplete="country-name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -133,7 +161,8 @@ const Cart = () => {
                             e.target.value,
                             item.price,
                             item.discount,
-                            item._id
+                            item._id,
+                            item
                           )
                         }
                       >
@@ -197,7 +226,7 @@ const Cart = () => {
 
                 <button
                   type="button"
-                  onClick={() => navigate("/checkout")}
+                  onClick={() => setOrderDetails()}
                   className="mt-5 bg-Green2Set2 font-semibold rounded-lg text-white p-3"
                 >
                   CHECKOUT
