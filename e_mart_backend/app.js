@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require('mongoose')
 const Grid = require("gridfs-stream")
 const app = express();
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 const PORT = process.env.PORT || 5000; 
 
 const cors = require("cors")
@@ -13,6 +13,7 @@ require('dotenv').config();
 const loginRoute = require('./routes/LoginRoute')
 const imageRoute = require('./routes/imageRoute')
 const productRoute = require('./routes/ProductRoute')
+const orderRoute = require('./routes/OrderRoute')
 
 mongoose.connect(
     "mongodb://127.0.0.1:27017/e_mart"
@@ -27,3 +28,4 @@ mongoose.connect(
 app.use('/api/v1',loginRoute)
 app.use('/api/v1',imageRoute)
 app.use('/api/v1',productRoute)
+app.use('/api/v1',orderRoute)

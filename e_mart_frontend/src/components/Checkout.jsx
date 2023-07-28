@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
 import { TiCreditCard } from "react-icons/ti";
+import axios from "axios";
+import { toast } from 'react-hot-toast';
 
 const Checkout = () => {
   const [firstName, setFirstName] = useState("");
@@ -37,8 +39,44 @@ const Checkout = () => {
     setShowAddress(false);
   };
 
-  const purchaseOrder = () => {
-    alert(totalFull);
+  const purchaseOrder = async () => {
+    const orderDetailsArray=[];
+
+    let orderDetails = JSON.parse(localStorage.getItem("orderDetails"));
+
+    orderDetails.map((orderDetail)=> {
+      orderDetailsArray.push({
+        product:orderDetail.item,
+        quantity:orderDetail.quantity,
+        total:orderDetail.total
+      })
+    })
+
+    let totalAmount = totalFull;
+
+    let shippingAddress = JSON.parse(localStorage.getItem("address"));
+    
+    let user = JSON.parse(localStorage.getItem("user"));
+
+    try {
+      await axios
+        .post("http://localhost:5000/api/v1/placeOrder",{
+          orderDetails,
+          totalAmount,
+          shippingAddress,
+          user
+        }) 
+        .then((res)=>{
+            if(res.status==201){
+              navigate('/dashboard')
+              toast.success(`Order Placed.`);
+            }
+        }) 
+
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   return (
@@ -249,7 +287,7 @@ const Checkout = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center bg-homeBaground rounded-xl shadow-lg w-4/5 ">
+        <div className="flex flex-col items-center bg-homeBaground rounded-xl shadow-lg w-4/5 h-full">
           <h1 className="text-2xl font-semibold text-darkGray">Checkout</h1>
           <div className="flex items-center mb-5">
             <TiTick size={30} className="text-blue1" />
@@ -417,7 +455,7 @@ const Checkout = () => {
 
             <button
               type="button"
-              onClick={() => purchaseOrder()}
+              onClick={purchaseOrder}
               className="mt-5 bg-BlueSet7 font-semibold rounded-lg text-white py-2 px-7 mb-3"
             >
               {"PAY  RS." + totalFull}
