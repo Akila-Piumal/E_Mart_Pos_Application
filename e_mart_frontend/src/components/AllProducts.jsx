@@ -78,9 +78,6 @@ const AllProducts = ({ incrementCartCount , setCartItemstoArray}) => {
                   <div className="box" onClick={loadProductDetails}>
                     <div className="product">
                       <div className="img">
-                        <span className="discount">
-                          {product.discount}% Off
-                        </span>
                         <img
                           src={product.imageUrl}
                           alt="image"

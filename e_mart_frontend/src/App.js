@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import DashBoard from "./components/DashBoard";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import AdminDashBoard from "./components/AdminDashBoard";
 
 const App = () => {
   // const navigate=useNavigate();
@@ -22,6 +23,7 @@ const App = () => {
       <Route path="/dashboard" element={<DashBoard/>} />
       <Route path="/cart" element={<Cart/>} />
       <Route path="/checkout" element={<Checkout/>} />
+      <Route path="/admin" element={<AdminDashBoard/>} />
     </Routes>
   );
 };

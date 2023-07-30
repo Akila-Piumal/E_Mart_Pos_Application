@@ -3,6 +3,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors:{
+        "dark-purple":'#081A51',
+        'light-white':'rgba(255,255,255,0.18)',
+        'light-blue':'#422AFB'
+      },
       fontFamily: {
         'sans': ['ui-sans-serif', 'system-ui'],
         'serif': ['ui-serif', 'Georgia'],
@@ -82,6 +87,9 @@ module.exports = {
         black:'#202020'
       },
       backgroundColor: {
+        dashboardColor:'#F5F8FE',
+        dashboardColor2:'#F4F4FD',
+
         graynew:'#EEEDED',
         grayNew2:'#E8E2E2',
         grayNew3:'#DCDCDC',

@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MyNavbar from './MyNavbar';
 import { useGoogleLogin } from '@react-oauth/google';
+import { toast } from 'react-hot-toast';
 
 
 const Login = () => {
@@ -122,8 +123,13 @@ const Login = () => {
           .then((res)=>{
               if(res.status=== 201){
                 localStorage.setItem('user',JSON.stringify(res.data.user));
-                alert("Login Success")
-                navigate("/dashboard");
+                toast.success(`Login Success`);
+                console.log(res.data.user)
+                if(res.data.user.role === 'admin'){
+                  navigate("/admin")
+                }else{
+                  navigate("/dashboard");
+                }
               }
           })
       }catch(err){
