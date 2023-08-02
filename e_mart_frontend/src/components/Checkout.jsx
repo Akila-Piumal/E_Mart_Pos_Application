@@ -57,6 +57,7 @@ const Checkout = () => {
     let shippingAddress = JSON.parse(localStorage.getItem("address"));
     
     let user = JSON.parse(localStorage.getItem("user"));
+    
 
     try {
       await axios

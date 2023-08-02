@@ -14,10 +14,18 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
 
-  shippingAddress:{
+  shippingAddress: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "address",
     required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  status:{
+    type: String,
+    default:'To Ship'
   }
 });
 
