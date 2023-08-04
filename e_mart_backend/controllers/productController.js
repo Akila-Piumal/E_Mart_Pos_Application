@@ -69,4 +69,20 @@ const getAll = async (req, res) => {
 
 const getProduct = (req, res) => {};
 
-module.exports = { getProduct, saveProduct, getAll };
+
+const deleteProduct = (req, res) => {
+  const productId = req.params.productId;
+
+  Product.findOneAndDelete({_id:productId})
+    .then((deletedProduct) => {
+      if (!deletedProduct) {
+        return res.status(404).json({ error: 'Product not found.' });
+      }
+      res.status(200).json({ message: `Product has been deleted successfully.`, deletedProduct });
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Error deleting the product.' });
+    });
+};
+
+module.exports = { getProduct, saveProduct, getAll, deleteProduct };

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/StateContext";
 
 
-const AllProducts = ({ incrementCartCount , setCartItemstoArray}) => {
+const AllProducts = ({setCartItemstoArray}) => {
   const [data, setData] = useState([]);
 
   const [count, setCount] = useState(0);

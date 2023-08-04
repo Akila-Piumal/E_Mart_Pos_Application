@@ -76,7 +76,7 @@ const getLatestOrders = (req, res) => {
       .then(result => {
         console.log("Last 10 orders:");
         console.log(result);
-        res.status('201').json({data:result})
+        res.status(201).json({data:result})
       })
       .catch(err => {
         console.error("Error fetching orders:", err);
