@@ -3,8 +3,10 @@ import AllProducts from "./AllProducts";
 import axios from "axios";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import Model from "./Model";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -20,19 +22,6 @@ const Products = () => {
       console.log(err);
     }
   };
-
-  // HP BM200 Headset
-  // 8500
-  // electronics
-  // HP BM200 500 MAH WIRELESS STEREO 4.2 BLUETOOTH HEADSET BLACK
-
-  // Vivo TWS 3 Earbud
-  // electronics
-  // Vivo TWS 3 true wireless intelligent noise reduction Bluetooth headset Hi-Fi wireless headset in-ear original genuine
-
-  // Nokia X6 Mobile Phone
-  // phone
-  // Nokia X6 6.1 Plus Refurbished Mobile Phone Dual Sim 4G LTE 5.8'' 16MP 4G ROM Android Smartphone Original Unlocked
 
   const deleteItem = async (productId) => {
     const res = await axios.delete(
@@ -52,9 +41,17 @@ const Products = () => {
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [productId, setProductId] = useState("");
+  const [availability, setAvailability] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const [showNewProductModel, setShowNewProductModel] = useState(false);
 
   const toggleModal = () => {
     setShowModal((prev) => !prev);
+  };
+
+  const toggleNewProductModal = () => {
+    setShowNewProductModel((prev) => !prev);
   };
 
   const handleEditClick = (product) => {
@@ -70,16 +67,17 @@ const Products = () => {
 
   const updateProduct = async () => {
     const updatedProduct = {
-      name:name,
-      price:price,
-      discount:discount,
-      quantity:quantity,
-      category:category,
-      description:description,
+      name: name,
+      price: price,
+      discount: discount,
+      quantity: quantity,
+      category: category,
+      description: description,
     };
 
     const res = await axios.put(
-      `http://localhost:5000/api/v1/products/${productId}`,updatedProduct
+      `http://localhost:5000/api/v1/products/${productId}`,
+      updatedProduct
     );
     if (res.status == 200) {
       alert(`${res.data.message}`);
@@ -88,10 +86,57 @@ const Products = () => {
     }
   };
 
+  const newProduct = () => {
+    toggleNewProductModal();
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  // Save A product
+  const saveProduct = async (e) => {
+    e.preventDefault();
+
+    const product = {
+      name:name,
+      price:price,
+      discount:discount,
+      quantity:quantity,
+      category:category,
+      description:description,
+      availability:availability,
+    }
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append('productData',JSON.stringify(product))
+    
+    try {
+      await axios
+        .post("http://localhost:5000/api/v1/saveProduct", formData)
+        .then((res) => {
+          console.log(res);
+          if(res.status==201){
+            alert("Saved");
+            toggleNewProductModal();
+            getData();
+          }
+        });
+    } catch (err) {
+      console.log(err.message);
+    }
+  
+  };
+
+
   return (
     <div>
       <dir>
-        <button className="bg-orange-400 rounded p-2 text-white font-semibold">
+        <button
+          className="bg-orange-400 rounded p-2 text-white font-semibold"
+          onClick={() => newProduct()}
+        >
           New Product
         </button>
       </dir>
@@ -261,6 +306,144 @@ const Products = () => {
                           <button
                             className="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded"
                             onClick={toggleModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {showNewProductModel && (
+                    <div className="fixed inset-0 flex items-center justify-center z-10 bg-opacity-50 bg-black">
+                      <div className="bg-white p-8 rounded-lg">
+                        <h2 className="text-2xl font-bold mb-4">New Product</h2>
+                        <div>
+                          <label
+                            for="name"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Product Name
+                          </label>
+                          <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            for="price"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            Price
+                          </label>
+                          <input
+                            type="text"
+                            name="price"
+                            id="price"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            for="discount"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            discount
+                          </label>
+                          <input
+                            type="text"
+                            name="discount"
+                            id="discount"
+                            value={discount}
+                            onChange={(e) => setDiscount(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            for="quantity"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            quantity
+                          </label>
+                          <input
+                            type="text"
+                            name="quantity"
+                            id="quantity"
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            for="category"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            category
+                          </label>
+
+                          <input
+                            type="text"
+                            name="category"
+                            id="category"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label
+                            for="description"
+                            className="block mb-2 text-sm font-medium text-gray-900"
+                          >
+                            description
+                          </label>
+                          <input
+                            type="text"
+                            name="description"
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 black w-full p-2.5"
+                            required
+                          />
+                        </div>
+                        <input
+                          type="file"
+                          name="image"
+                          onChange={handleFileChange}
+                          className="w-300"
+                        />
+
+                        <div className="flex gap-3">
+                          <button
+                            className="mt-4 bg-yellow-500 text-white font-bold py-2 px-4 rounded"
+                            onClick={saveProduct}
+                          >
+                            Save
+                          </button>
+
+                          <button
+                            className="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded"
+                            onClick={toggleNewProductModal}
                           >
                             Close
                           </button>

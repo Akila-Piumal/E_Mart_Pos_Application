@@ -6,6 +6,7 @@ import DashBoard from "./components/DashBoard";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import AdminDashBoard from "./components/AdminDashBoard";
+import NewProduct from "./components/NewProduct";
 
 const App = () => {
   // const navigate=useNavigate();
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/cart" element={<Cart/>} />
       <Route path="/checkout" element={<Checkout/>} />
       <Route path="/admin" element={<AdminDashBoard/>} />
+      <Route path="/new" element={<NewProduct/>} />
     </Routes>
   );
 };
