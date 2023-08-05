@@ -85,4 +85,18 @@ const deleteProduct = (req, res) => {
     });
 };
 
-module.exports = { getProduct, saveProduct, getAll, deleteProduct };
+const updateProduct = (req, res) => {
+  const productId = req.params.productId;
+  const updatedProduct = req.body;
+
+  Product.findByIdAndUpdate(productId, updatedProduct, { new: true })
+    .then((product) => {
+      res.status(200).json({message:"updated.",product});
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: 'Error updating product' });
+    });
+}
+
+module.exports = { getProduct, saveProduct, getAll, deleteProduct, updateProduct };
